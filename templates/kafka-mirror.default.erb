@@ -4,9 +4,9 @@
 KAFKA_MIRROR_START=yes
 
 # User and group to run as
-KAFKA_USER=kafka
-KAFKA_GROUP=kafka
-KAFKA_CONFIG=/etc/kafka
+KAFKA_USER=<%= @kafka_user %>
+KAFKA_GROUP=<%= @kafka_group %>
+KAFKA_CONFIG=<%= @kafka_config_dir %>
 
 # The default JMX_PORT for Kafka MirrorMaker is 9993.
 # Set JMX_PORT to something else to override this.
