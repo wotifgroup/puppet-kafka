@@ -48,6 +48,9 @@ class kafka::defaults {
 
     $metrics_properties              = undef
 
+    $kafka_user                      = 'kafka'
+    $kafka_group                     = 'kafka'
+
     # Kafka package version.
     $version                         = 'installed'
 

@@ -77,7 +77,13 @@
 #
 # $kafka_log_file                   - File in which to write Kafka logs (not event message data).
 #                                     Default: /var/log/kafka/kafka.log
-
+#
+# $kafka_user                       - User that the Kafka service runs as
+#                                     Default: kafa
+#
+# $kafka_group                      - Group that the Kafka service runs as
+#                                     Default: kafa
+#
 #
 class kafka::server(
     $enabled                         = true,
@@ -111,6 +117,9 @@ class kafka::server(
     $metrics_properties              = $kafka::defaults::metrics_properties,
     $kafka_config_dir                = $kafka::defaults::kafka_config_dir,
     $kafka_log_file                  = $kafka::defaults::kafka_log_file,
+
+    $kafka_user                      = $kafka::defaults::kafka_user,
+    $kafka_group                     = $kafka::defaults::kafka_group,
 
     $server_properties_template      = $kafka::defaults::server_properties_template,
     $default_template                = $kafka::defaults::server_default_template,
@@ -152,8 +161,8 @@ class kafka::server(
     # which contains daemon process logs.
     file { $log_dirs:
         ensure  => 'directory',
-        owner   => 'kafka',
-        group   => 'kafka',
+        owner   => $kafa_user,
+        group   => $kafa_group,
         mode    => '0755',
     }
 
