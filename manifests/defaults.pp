@@ -71,4 +71,18 @@ class kafka::defaults {
     $server_properties_template      = 'kafka/server.properties.erb'
     $server_default_template         = 'kafka/kafka.default.erb'
     $mirror_default_template         = 'kafka/kafka-mirror.default.erb'
+
+    case $::osfamily {
+        'debian': {
+            $sysconfig_dir = '/etc/default'
+        }
+        'redhat': {
+            $sysconfig_dir = '/etc/sysconfig'
+        }
+        default: {
+            fail("Unsupported osfamily ${::osfamily}")
+        }
+    }
+
 }
+

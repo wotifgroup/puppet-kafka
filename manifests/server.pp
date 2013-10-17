@@ -149,7 +149,7 @@ class kafka::server(
     }
 
     # Render out Kafka Broker config files.
-    file { '/etc/default/kafka':
+    file { "${sysconfig_dir}/kafka":
         content => template($default_template),
     }
     file { "${kafka_config_dir}/server.properties":
