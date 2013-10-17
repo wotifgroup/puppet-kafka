@@ -19,6 +19,7 @@ class kafka::defaults {
     $zookeeper_connection_timeout_ms = 1000000
     $zookeeper_chroot                = undef
 
+    $kafka_config_dir                = '/etc/kafka'
     $kafka_log_file                  = '/var/log/kafka/kafka.log'
     $producer_type                   = 'async'
     $producer_batch_num_messages     = 200
