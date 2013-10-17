@@ -72,6 +72,9 @@
 #                                     Use this for configuring your own metrics reporter classes.
 #                                     Default: undef
 #
+# $kafka_config_dir                 - Directory where Kafka configuration files are kept
+#                                     Default: /etc/kafka
+#
 # $kafka_log_file                   - File in which to write Kafka logs (not event message data).
 #                                     Default: /var/log/kafka/kafka.log
 
@@ -106,6 +109,7 @@ class kafka::server(
     $log_cleanup_policy              = $kafka::defaults::log_cleanup_policy,
 
     $metrics_properties              = $kafka::defaults::metrics_properties,
+    $kafka_config_dir                = $kafka::defaults::kafka_config_dir,
     $kafka_log_file                  = $kafka::defaults::kafka_log_file,
 
     $server_properties_template      = $kafka::defaults::server_properties_template,
@@ -139,7 +143,7 @@ class kafka::server(
     file { '/etc/default/kafka':
         content => template($default_template),
     }
-    file { '/etc/kafka/server.properties':
+    file { "${kafka_config_dir}/server.properties":
         content => template($server_properties_template),
     }
 
@@ -155,7 +159,7 @@ class kafka::server(
 
     # log4j configuration for Kafka daemon
     # process logs (this uses $kafka_log_dir).
-    file { '/etc/kafka/log4j.properties':
+    file { "${kafka_config_dir}/log4j.properties":
         content => template($log4j_properties_template),
     }
 
@@ -170,8 +174,8 @@ class kafka::server(
     service { 'kafka':
         ensure     => 'running',
         require    => [
-            File['/etc/kafka/server.properties'],
-            File['/etc/kafka/log4j.properties'],
+            File["${kafka_config_dir}/server.properties"],
+            File["${kafka_config_dir}/log4j.properties"],
             File['/etc/default/kafka'],
             File[$log_dirs],
         ],
