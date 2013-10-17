@@ -185,7 +185,7 @@ class kafka::server(
         require    => [
             File["${kafka_config_dir}/server.properties"],
             File["${kafka_config_dir}/log4j.properties"],
-            File['/etc/default/kafka'],
+            File["${sysconfig_dir}/kafka"],
             File[$log_dirs],
         ],
         hasrestart => true,
