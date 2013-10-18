@@ -75,8 +75,8 @@
 # $kafka_config_dir                 - Directory where Kafka configuration files are kept
 #                                     Default: /etc/kafka
 #
-# $kafka_log_file                   - File in which to write Kafka logs (not event message data).
-#                                     Default: /var/log/kafka/kafka.log
+# $kafka_log_dir                    - DIr in which to write Kafka logs (not event message data).
+#                                     Default: /var/log/kafka
 #
 # $kafka_user                       - User that the Kafka service runs as
 #                                     Default: kafa
@@ -116,7 +116,7 @@ class kafka::server(
 
     $metrics_properties              = $kafka::defaults::metrics_properties,
     $kafka_config_dir                = $kafka::defaults::kafka_config_dir,
-    $kafka_log_file                  = $kafka::defaults::kafka_log_file,
+    $kafka_log_dir                   = $kafka::defaults::kafka_log_dir,
 
     $kafka_user                      = $kafka::defaults::kafka_user,
     $kafka_group                     = $kafka::defaults::kafka_group,
@@ -148,8 +148,6 @@ class kafka::server(
         $broker_port = $kafka::defaults::default_broker_port
     }
 
-    $kafka_log_dir  = dirname($kafka_log_file)
-
     # Render out Kafka Broker config files.
     file { "${sysconfig_dir}/kafka":
         content => template($default_template),
@@ -159,7 +157,7 @@ class kafka::server(
     }
 
     # This is the message data directory,
-    # not to be confused with the $kafka_log_file,
+    # not to be confused with the $kafka_log_dir,
     # which contains daemon process logs.
     file { $log_dirs:
         ensure  => 'directory',

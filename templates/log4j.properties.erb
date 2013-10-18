@@ -8,7 +8,7 @@ log4j.appender.stdout.layout.ConversionPattern=[%d] %p %m (%c)%n
 log4j.appender.stdout.Threshold=WARN
 
 log4j.appender.fileAppender=org.apache.log4j.RollingFileAppender
-log4j.appender.fileAppender.File=<%= @kafka_log_file %>
+log4j.appender.fileAppender.File=<%= @kafka_log_dir %>/kafka.log
 log4j.appender.fileAppender.MaxFileSize=256MB
 log4j.appender.fileAppender.MaxBackupIndex=2
 log4j.appender.fileAppender.layout=org.apache.log4j.PatternLayout
