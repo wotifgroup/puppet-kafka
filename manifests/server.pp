@@ -148,6 +148,8 @@ class kafka::server(
         $broker_port = $kafka::defaults::default_broker_port
     }
 
+    $kafka_log_dir  = dirname($kafka_log_file)
+
     # Render out Kafka Broker config files.
     file { "${sysconfig_dir}/kafka":
         content => template($default_template),
