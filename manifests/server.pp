@@ -137,16 +137,7 @@ class kafka::server(
 
     # Get this broker's id and port out of the $kafka::hosts configuration hash
     $broker_id   = $brokers[$::fqdn]['id']
-
-    # Using a conditional assignment selector with a
-    # Hash value results in a puppet syntax error.
-    # Using an if/else instead.
-    if ($brokers[$::fqdn]['port']) {
-        $broker_port = $brokers[$::fqdn]['port']
-    }
-    else {
-        $broker_port = $kafka::defaults::default_broker_port
-    }
+    $broker_port = pick($brokers[$::fqdn]['port'], $kafka::defaults::default_broker_port)
 
     # Render out Kafka Broker config files.
     file { "${sysconfig_dir}/kafka":
