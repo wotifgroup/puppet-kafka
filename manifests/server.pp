@@ -152,8 +152,8 @@ class kafka::server(
     # which contains daemon process logs.
     file { $log_dirs:
         ensure  => 'directory',
-        owner   => $kafa_user,
-        group   => $kafa_group,
+        owner   => $kafka_user,
+        group   => $kafka_group,
         mode    => '0755',
     }
 
